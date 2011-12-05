@@ -80,3 +80,12 @@ task :release => [ :package ] do
                         "pkg/locale-#{PKG_VERSION}.gem",
                         "pkg/ruby-locale-#{PKG_VERSION}.tar.gz")
 end
+
+desc "Regenerate .gemspec file"
+task :gemspec do
+  spec.validate
+  File.open("locale.gemspec", 'w') do |file|
+    file << spec.to_ruby
+    file << "# AUTOMATICALLY GENERATED FILE. DO NOT MODIFY. MAKE CHANGES IN Rakefile AND REGENERATE WITH `rake gemspec`\n"
+  end
+end
